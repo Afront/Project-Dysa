@@ -11,10 +11,8 @@ def sort(words)
   while not_sorted(words)
     (words.length - 1).times do |i|
       next unless words[i] > words[i + 1]
-
-      tmp = words[i]
-      words[i] = words[i + 1]
-      words[i + 1] = tmp
+    
+      words[i], words[i + 1] = words[i + 1], words[i]
     end
   end
   words
