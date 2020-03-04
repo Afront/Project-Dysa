@@ -34,7 +34,7 @@ describe Stack do
     end
   end
 
-  describe "peek" do
+  describe "#peek" do
     it "should return the last value of the stack" do
       stack = Stack.new(3, "a")
       last_value = stack.to_a[-1]
@@ -61,7 +61,7 @@ describe Stack do
     end
   end
 
-  describe "pop" do
+  describe "#pop" do
     it "should return the last value of the stack" do
       stack = Stack.new(3, "a")
       last_value = stack.to_a[-1]
