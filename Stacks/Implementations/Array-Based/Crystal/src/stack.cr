@@ -30,6 +30,10 @@ class Stack(T)
     @array
   end
 
+  def peek
+    @array[-1]
+  end
+
   def push(value : T)
     @array.push value
   end
