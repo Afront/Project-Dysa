@@ -123,4 +123,16 @@ describe Stack do
     #   end
     # end
   end
+
+  describe "#to_s" do
+    it "should turn a stack into a string based on its values" do
+      Stack.new([1, 2, 3]).to_s.should eq("[1, 2, 3]")
+    end
+  end
+
+  describe "#inspect" do
+    it "should 'return' the stack as a string with brackets" do
+      Stack(Int32).new.inspect.should eq("[]")
+    end
+  end
 end

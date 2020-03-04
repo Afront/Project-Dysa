@@ -65,6 +65,24 @@ class Stack(T)
     @array
   end
 
+  # Converts the stack into a string
+  #
+  # ```
+  # Stack.new([1, 2]).to_s # => "[1,2]"
+  # ```
+  def to_s(io : IO) : Nil
+    @array.to_s io
+  end
+
+  # "Appends the String representation" of the stack
+  #
+  # ```
+  # Stack.new([1, 2]).to_s # => "[1,2]"
+  # ```
+  def inspect(io : IO) : Nil
+    to_s io
+  end
+
   # Checks if the stack is empty or not
   #
   # ```
