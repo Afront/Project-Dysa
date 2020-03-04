@@ -29,4 +29,16 @@ class Stack(T)
   def to_a
     @array
   end
+
+  def push(value : T)
+    @array.push value
+  end
+
+  def pop
+    @array.pop
+  end
+
+  def ==(other : Stack)
+    @array == other.to_a
+  end
 end

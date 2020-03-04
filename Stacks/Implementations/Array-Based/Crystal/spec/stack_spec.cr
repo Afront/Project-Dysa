@@ -33,4 +33,38 @@ describe Stack do
       Stack.new([1, 2]) { |i| i * 2 }.to_a.should eq([1, 2].map { |i| i*2 })
     end
   end
+
+  describe "#push" do
+    it "can push a value of the same type" do
+      stack = Stack(Int32).new
+      stack.push 5
+    end
+
+    # it "cannot push a value of a different type" do
+    #   expect_raises(Exception) do
+    #     stack = Stack.new([1, 2, 3])
+    #     stack.push "a"
+    #   end
+    # end
+  end
+
+  describe "pop" do
+    it "should return the last value of the stack" do
+      stack = Stack.new(3, "a")
+      last_value = stack.to_a[-1]
+      stack.pop.should eq(last_value)
+    end
+
+    it "should remove the last value of the stack" do
+      stack = Stack.new(2, "a")
+      last_value = stack.to_a[-1]
+      stack.pop
+      stack.should eq(Stack.new(1, "a"))
+    end
+
+    it "should be the same type as the type of the Array" do
+      stack = Stack.new(3, "ah")
+      stack.pop.should be_a(String)
+    end
+  end
 end
