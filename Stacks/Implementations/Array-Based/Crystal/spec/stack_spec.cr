@@ -34,6 +34,28 @@ describe Stack do
     end
   end
 
+  describe "#empty?" do
+    it "should return true if the stack is empty" do
+      Stack(Int32).new.empty?.should eq(true)
+    end
+
+    it "should return false if the stack is not empty" do
+      Stack.new([1, 2]).empty?.should eq(false)
+    end
+
+    it "should be the same type as the type of the Array" do
+      stack = Stack.new(3, "ah")
+      stack.peek.should be_a(String)
+    end
+
+    it "cannot peek at an empty stack" do
+      expect_raises(IndexError) do
+        stack = Stack(Int32).new
+        stack.peek
+      end
+    end
+  end
+
   describe "#peek" do
     it "should return the last value of the stack" do
       stack = Stack.new(3, "a")

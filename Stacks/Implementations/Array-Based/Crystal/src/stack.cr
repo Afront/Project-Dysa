@@ -65,6 +65,15 @@ class Stack(T)
     @array
   end
 
+  # Checks if the stack is empty or not
+  #
+  # ```
+  # Stack(Int32).new.empty? # => true
+  # ```
+  def empty?
+    @array.empty?
+  end
+
   # Looks at the last value (or the 'top') of the stack
   #
   # ```
