@@ -25,4 +25,8 @@ class Stack(T)
   def initialize(array : Array(T), &block : Int32 -> T)
     @array = array.map(&block)
   end
+
+  def to_a
+    @array
+  end
 end
