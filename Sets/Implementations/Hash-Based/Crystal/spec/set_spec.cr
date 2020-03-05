@@ -5,12 +5,11 @@ describe NewSet do
 
   describe "#initialize" do
     it "can be initialized without any arguments" do
-      p NewSet::BaseSet(Int32).new
+      NewSet::BaseSet(Int32).new
     end
 
     it "can be initialized from an enumerable" do
       a = NewSet::BaseSet.new [1, 2, 3]
-      p a
     end
   end
 
@@ -23,6 +22,24 @@ describe NewSet do
   describe "#inspect" do
     it "should 'return' the set as a string with brackets" do
       NewSet::BaseSet(Int32).new.inspect.should eq("{}")
+    end
+  end
+
+  describe "#add" do
+    it "can push a value of the same type" do
+      set = NewSet::BaseSet(Int32).new
+      set.add 1
+    end
+
+    it "can use << as an alias" do
+      set = NewSet::BaseSet(Int32).new
+      set << 1
+    end
+  end
+
+  describe "#union" do
+    it "should return a set that contains elements from both sets" do
+      NewSet::BaseSet(Int32).new.union(NewSet::BaseSet.new([1, 2, 3]))
     end
   end
 end
