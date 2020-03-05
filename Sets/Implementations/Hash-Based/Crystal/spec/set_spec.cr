@@ -13,6 +13,12 @@ describe NewSet do
     end
   end
 
+  describe "#to_a" do
+    it "should turn a set into an array based on its values" do
+      NewSet::BaseSet.new([1, 2, 2]).to_a.should eq([1, 2])
+    end
+  end
+
   describe "#to_s" do
     it "should turn a set into a string based on its values" do
       NewSet::BaseSet.new([1, 2, 3]).to_s.should eq("{1, 2, 3}")

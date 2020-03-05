@@ -20,10 +20,19 @@ module NewSet
       end
     end
 
+    # Converts the base set into an array
+    #
+    # ```
+    # BaseSet.new([1, 2, 2]).to_a # => [1,2]
+    # ```
+    def to_a
+      @hash.keys
+    end
+
     # Converts the base set into a string
     #
     # ```
-    # BaseSet.new([1, 2]).to_s # => "[1,2]"
+    # BaseSet.new([1, 2]).to_s # => "{1,2}"
     # ```
     def to_s(io : IO) : Nil
       is_executed = exec_recursive(:to_s) do
@@ -37,7 +46,7 @@ module NewSet
     # "Appends the String representation" of the base set
     #
     # ```
-    # BaseSet.new([1, 2]).to_s # => "[1,2]"
+    # BaseSet.new([1, 2]).to_s # => "{1,2}"
     # ```
     def inspect(io : IO) : Nil
       to_s io
