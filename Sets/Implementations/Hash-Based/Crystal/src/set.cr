@@ -92,7 +92,7 @@ module NewSet
       new_set
     end
 
-    def |(other : Set(U)) forall U
+    def |(other : BaseSet(U)) forall U
       union other
     end
 
