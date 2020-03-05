@@ -10,7 +10,11 @@ describe NewSet do
     end
 
     it "can be initialized from an enumerable" do
-      a = BaseSet.new [1, 2, 3]
+      BaseSet.new [1, 2, 3]
+    end
+
+    it "should only 'keep' one 'copy' of each element" do
+      BaseSet.new([1, 2, 2, 3]).should eq(BaseSet.new([1, 2, 2, 3]))
     end
   end
 
@@ -35,28 +39,42 @@ describe NewSet do
   describe "#add" do
     it "can push a value of the same type" do
       set = BaseSet(Int32).new
-      set.add 1
+      set.add(1).should eq(BaseSet.new([1]))
     end
 
     it "can use << as an alias" do
       set = BaseSet(Int32).new
-      set << 1
+      new_set = set << 1
+      new_set.should eq(BaseSet.new([1]))
     end
   end
 
   describe "#union" do
     it "should return a set that contains elements from both sets" do
-      BaseSet(Int32).new.union(BaseSet.new([1, 2, 3]))
+      BaseSet.new([-1, -2, -3]).union(BaseSet.new([1, 2, 3])).should eq(BaseSet.new([-1, -2, -3, 1, 2, 3]))
     end
 
     it "can use | as an alias" do
-      BaseSet(Int32).new | (BaseSet.new([1, 2, 3]))
+      (BaseSet.new([-1, -2, -3]) | BaseSet.new([1, 2, 3])).should eq(BaseSet.new([-1, -2, -3, 1, 2, 3]))
+    end
+
+    it "must be associative" do
+      a = [1, 2, 3]
+      b = [2, 3, 4, 5]
+      c = [0, -1, -2, -3]
+      set1 = (BaseSet.new(a) | BaseSet.new(b)) | BaseSet.new(c)
+      set2 = BaseSet.new(a) | (BaseSet.new(b) | BaseSet.new(c))
+      set1.should eq(set2)
     end
 
     it "must be commutative" do
       a = [1, 2, 3]
       b = [2, 3, 4, 5]
-      BaseSet.new(a) | BaseSet.new(b) || BaseSet.new(b) | BaseSet.new(a)
+      (BaseSet.new(a) | BaseSet.new(b)).should eq(BaseSet.new(b) | BaseSet.new(a))
+    end
+
+    it "can be used with an empty set (identity)" do
+      (BaseSet.new([1, 2, 3]) | BaseSet(Int32).new).should eq(BaseSet.new([1, 2, 3]))
     end
   end
 end
