@@ -5,8 +5,7 @@ module NewSet
   # TODO: Turn BaseSet into an abstract/virtual class?
   class BaseSet(T)
     include Enumerable(T) # for `join`
-
-    # include Comparable(BaseSet)
+    include Comparable(BaseSet)
 
     def initialize
       @hash = Hash(T, Nil).new
@@ -65,6 +64,7 @@ module NewSet
     # ```
     def add(element : T)
       @hash[element] = nil
+      self
     end
 
     # Adds a value into a stack
@@ -103,6 +103,10 @@ module NewSet
     end
 
     def subset
+    end
+
+    def <=>(other : BaseSet(U)) forall U
+      to_a.sort <=> other.to_a.sort
     end
   end
 end
