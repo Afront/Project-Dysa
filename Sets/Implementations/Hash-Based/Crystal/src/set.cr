@@ -108,7 +108,12 @@ module NewSet
       intersection other
     end
 
-    def difference
+    def difference(other : BaseSet(U)) forall U
+      BaseSet.new(other.reject { |element| includes? element })
+    end
+
+    def -(other : BaseSet(U)) forall U
+      difference(other)
     end
 
     def subset

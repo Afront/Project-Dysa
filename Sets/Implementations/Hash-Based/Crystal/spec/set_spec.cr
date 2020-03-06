@@ -149,4 +149,22 @@ describe NewSet do
       (BaseSet.new(a).∩ BaseSet.new(u)).should eq(BaseSet.new(u))
     end
   end
+
+  describe "#difference" do
+    it "should return a set of elements that are not in the second set" do
+      b = BaseSet.new([2, 3, 4])
+      a = BaseSet.new([1, 2, 3])
+      c = BaseSet.new([1])
+
+      b.difference(a).should eq(c)
+    end
+
+    it "can use - as an alias" do
+      b = BaseSet.new([2, 3, 4])
+      a = BaseSet.new([1, 2, 3])
+      c = BaseSet.new([1])
+
+      (b - a).should eq(c)
+    end
+  end
 end
