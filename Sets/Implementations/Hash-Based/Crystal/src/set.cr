@@ -96,6 +96,10 @@ module NewSet
       union other
     end
 
+    def ∪(other : BaseSet(U)) forall U
+      union other
+    end
+
     def intersection
     end
 

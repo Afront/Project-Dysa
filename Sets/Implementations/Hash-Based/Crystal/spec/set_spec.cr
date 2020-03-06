@@ -58,6 +58,10 @@ describe NewSet do
       (BaseSet.new([-1, -2, -3]) | BaseSet.new([1, 2, 3])).should eq(BaseSet.new([-1, -2, -3, 1, 2, 3]))
     end
 
+    it "can use ∪ as an alias" do
+      (BaseSet.new([-1, -2, -3]).∪ BaseSet.new([1, 2, 3])).should eq(BaseSet.new([-1, -2, -3, 1, 2, 3]))
+    end
+
     it "must be associative" do
       a = [1, 2, 3]
       b = [2, 3, 4, 5]
@@ -70,7 +74,7 @@ describe NewSet do
     it "must be commutative" do
       a = [1, 2, 3]
       b = [2, 3, 4, 5]
-      (BaseSet.new(a) | BaseSet.new(b)).should eq(BaseSet.new(b) | BaseSet.new(a))
+      (BaseSet.new(a).∪ BaseSet.new(b)).should eq(BaseSet.new(b).∪ BaseSet.new(a))
     end
 
     it "can be used with an empty set (identity)" do
