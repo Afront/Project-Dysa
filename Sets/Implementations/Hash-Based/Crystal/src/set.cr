@@ -100,7 +100,12 @@ module NewSet
       union other
     end
 
-    def intersection
+    def intersection(other : BaseSet(U)) forall U
+      BaseSet.new(self.select { |element| other.includes? element })
+    end
+
+    def ∩(other : BaseSet(U)) forall U
+      intersection other
     end
 
     def difference

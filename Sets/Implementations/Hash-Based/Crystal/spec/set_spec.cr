@@ -77,6 +77,13 @@ describe NewSet do
       (BaseSet.new(a).∪ BaseSet.new(b)).should eq(BaseSet.new(b).∪ BaseSet.new(a))
     end
 
+    it "must be distributive " do
+      a = BaseSet.new([1])
+      b = BaseSet.new([1, 2, 3])
+      c = BaseSet.new([3, 4, 1])
+      (a | (b.∩ c)).should eq((a | b).∩ (a | c))
+    end
+
     it "can be used with an empty set (identity)" do
       a = [1, 2, 3]
       (BaseSet.new(a) | BaseSet(Int32).new).should eq(BaseSet.new(a))
@@ -91,6 +98,55 @@ describe NewSet do
       a = [1]
       u = [1, 2, 3]
       (BaseSet.new(a) | BaseSet.new(u)).should eq(BaseSet.new(u))
+    end
+  end
+
+  describe "#intersection" do
+    it "should return a set that contains elements that are in both sets" do
+      BaseSet.new([1, 0, -1, -2, -3]).intersection(BaseSet.new([1, 2, 3])).should eq(BaseSet.new([1]))
+    end
+
+    it "can use ∩ as an alias" do
+      (BaseSet.new([-1, 0, 1]).∩ BaseSet.new([1, 2, 3])).should eq(BaseSet.new([1]))
+    end
+
+    it "must be associative" do
+      a = [1, 2, 3]
+      b = [2, 3, 4, 5]
+      c = [0, -1, -2, -3]
+      set1 = (BaseSet.new(a).∩ BaseSet.new(b)).∩ BaseSet.new(c)
+      set2 = BaseSet.new(a).∩ (BaseSet.new(b).∩ BaseSet.new(c))
+      set1.should eq(set2)
+    end
+
+    it "must be commutative" do
+      a = [1, 2, 3]
+      b = [2, 3, 4, 5]
+      (BaseSet.new(a).∩ BaseSet.new(b)).should eq(BaseSet.new(b).∩ BaseSet.new(a))
+    end
+
+    it "must be distributive " do
+      a = BaseSet.new([1])
+      b = BaseSet.new([1, 2, 3])
+      c = BaseSet.new([3, 4, 1])
+      (a.∩ (b | c)).should eq((a.∩ b) | (a.∩ c))
+    end
+
+    it "has an identity expression" do
+      a = [1, 2, 3]
+      b = [1, 2, 3, 4, 5]
+      (BaseSet.new(a).∩ BaseSet.new(b)).should eq(BaseSet.new(a))
+    end
+
+    it "must be idempotent" do
+      a = [1, 2, 3]
+      (BaseSet.new(a).∩ BaseSet.new(a)).should eq(BaseSet.new(a))
+    end
+
+    it "must follow the domination law" do
+      a = [1, 2, 3]
+      u = [] of Int32
+      (BaseSet.new(a).∩ BaseSet.new(u)).should eq(BaseSet.new(u))
     end
   end
 end
