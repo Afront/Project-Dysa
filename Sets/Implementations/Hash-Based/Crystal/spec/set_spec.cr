@@ -74,7 +74,19 @@ describe NewSet do
     end
 
     it "can be used with an empty set (identity)" do
-      (BaseSet.new([1, 2, 3]) | BaseSet(Int32).new).should eq(BaseSet.new([1, 2, 3]))
+      a = [1, 2, 3]
+      (BaseSet.new(a) | BaseSet(Int32).new).should eq(BaseSet.new(a))
+    end
+
+    it "must be idempotent" do
+      a = [1, 2, 3]
+      (BaseSet.new(a) | BaseSet.new(a)).should eq(BaseSet.new(a))
+    end
+
+    it "must follow the domination law" do
+      a = [1]
+      u = [1, 2, 3]
+      (BaseSet.new(a) | BaseSet.new(u)).should eq(BaseSet.new(u))
     end
   end
 end
