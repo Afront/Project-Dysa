@@ -117,7 +117,7 @@ module NewSet
     end
 
     def subset?(other : BaseSet(U)) forall U
-      other.map { |element| includes? element }.all? { |bool| bool == true }
+      map { |element| other.includes? element }.all?(true)
     end
 
     def superset?(other : BaseSet(U)) forall U

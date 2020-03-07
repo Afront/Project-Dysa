@@ -167,4 +167,34 @@ describe NewSet do
       (b - a).should eq(c)
     end
   end
+
+  describe "#subset?" do
+    it "should return true if the two sets are equivalent" do
+      BaseSet.new([1, 2, 3]).subset?(BaseSet.new([1, 2, 3])).should eq(true)
+    end
+
+    it "should return true if the first set is a subset of the second set" do
+      BaseSet.new([1, 3]).subset?(BaseSet.new([1, 2, 3])).should eq(true)
+    end
+
+    it "should return false if the first set contains elements not in the second" do
+      BaseSet.new([5, 3]).subset?(BaseSet.new([1, 2, 3])).should eq(false)
+      BaseSet.new([1, 2, 3, 4]).subset?(BaseSet.new([1, 2, 3])).should eq(false)
+    end
+  end
+
+  describe "#superset?" do
+    it "should return true if the two sets are equivalent" do
+      BaseSet.new([1, 2, 3]).superset?(BaseSet.new([1, 2, 3])).should eq(true)
+    end
+
+    it "should return true if the first set is a superset of the second set" do
+      BaseSet.new([1, 2, 3]).superset?(BaseSet.new([1, 3])).should eq(true)
+    end
+
+    it "should return false if the second set contains elements not in the first" do
+      BaseSet.new([1, 2, 3]).superset?(BaseSet.new([6, 3])).should eq(false)
+      BaseSet.new([1, 2, 3]).superset?(BaseSet.new([1, 2, 3, 4])).should eq(false)
+    end
+  end
 end
