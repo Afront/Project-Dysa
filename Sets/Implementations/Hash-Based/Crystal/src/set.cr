@@ -58,7 +58,7 @@ module NewSet
     end
 
     # Adds a value into a stack
-    #
+    # NOTE: I just realized this operator is only part of dynamic sets, but this is the easiest way to implement `#union`
     # ```
     # BaseSet.new([1, 2]).add(2) # => {1,2,2}
     # ```
@@ -116,7 +116,12 @@ module NewSet
       difference(other)
     end
 
-    def subset
+    def subset?(other : BaseSet(U)) forall U
+      other.map { |element| includes? element }.all? { |bool| bool == true }
+    end
+
+    def superset?(other : BaseSet(U)) forall U
+      other.subset?(self)
     end
 
     def <=>(other : BaseSet(U)) forall U
