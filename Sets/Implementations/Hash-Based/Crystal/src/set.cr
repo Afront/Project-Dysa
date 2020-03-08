@@ -1,12 +1,13 @@
-require "./set_methods"
+require "./core_set_methods"
 
 # TODO: Write documentation for `Set`
 module NewSet
   VERSION = "0.1.0"
 
-  # TODO: Turn BaseSet into an abstract/virtual class?
-  class BaseSet(T)
-    include SetMethods(T)
+  class StaticSet(T)
+    include Enumerable(T) # for `join`
+    include Comparable(StaticSet)
+    include CoreSetMethods(T)
 
     def initialize
       @hash = Hash(T, Nil).new
@@ -20,50 +21,71 @@ module NewSet
       end
     end
 
-    def union(other : BaseSet(U)) forall U
-      new_set = BaseSet(U | T).new
+    # Converts the base set into an array
+    #
+    # ```
+    # StaticSet.new([1, 2, 2]).to_a # => [1,2]
+    # ```
+    def to_a
+      @hash.keys
+    end
 
-      each do |key|
-        new_set << key
+    # Converts the base set into a string
+    #
+    # ```
+    # StaticSet.new([1, 2]).to_s # => "{1,2}"
+    # ```
+    def to_s(io : IO) : Nil
+      is_executed = exec_recursive(:to_s) do
+        io << '{'
+        join ", ", io, &.inspect(io)
+        io << '}'
       end
+      io << "{...}" unless is_executed # probably not needed
+    end
 
-      other.each do |key|
-        new_set << key
+    # "Appends the String representation" of the base set
+    #
+    # ```
+    # StaticSet.new([1, 2]).to_s # => "{1,2}"
+    # ```
+    def inspect(io : IO) : Nil
+      to_s io
+    end
+
+    def each
+      @hash.each_key do |key|
+        yield key
       end
-
-      new_set
     end
 
-    def |(other : BaseSet(U)) forall U
-      union other
+    def empty?
+      @hash.empty?
     end
 
-    def ∪(other : BaseSet(U)) forall U
-      union other
-    end
+    # # Adds a value into a stack
+    # # NOTE: I just realized this operator is only part of dynamic sets, but this is the easiest way to implement `#union`
+    # # ```
+    # # StaticSet.new([1, 2]).add(2) # => {1,2,2}
+    # # ```
+    # private def add(element : T)
+    #   @hash[element] = nil
+    #   self
+    # end
 
-    def intersection(other : BaseSet(U)) forall U
-      BaseSet.new(self.select { |element| other.includes? element })
-    end
+    # # Adds a value into a stack
+    # #
+    # # NOTE: I might add a #push method as well if needed...
+    # #
+    # # ```
+    # # StaticSet.new([1, 2]).add(2) # => {1,2,2}
+    # # ```
+    # private def <<(element : T)
+    #   add element
+    # end
 
-    def ∩(other : BaseSet(U)) forall U
-      intersection other
-    end
-
-    def difference(other : BaseSet(U)) forall U
-      BaseSet.new(other.reject { |element| includes? element })
-    end
-
-    def -(other : BaseSet(U)) forall U
-      difference(other)
-    end
-
-    def subset?(other : BaseSet(U)) forall U
-      map { |element| other.includes? element }.all?(true)
-    end
-
-    def superset?(other : BaseSet(U)) forall U
-      other.subset?(self)
+    def <=>(other : StaticSet(U)) forall U
+      to_a.sort <=> other.to_a.sort
     end
   end
 end
