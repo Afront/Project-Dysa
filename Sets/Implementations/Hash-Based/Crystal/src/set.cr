@@ -77,7 +77,7 @@ module NewSet
   end
 
   class DynamicSet(T) < StaticSet(T)
-    def initialize(@capacity : Int32? = nil)
+    def initialize(@capacity : Int32? = nil, @fixed : Bool? = false)
       super()
     end
 
@@ -100,6 +100,8 @@ module NewSet
     # StaticSet.new([1, 2]).add(2) # => {1,2,2}
     # ```
     def add(element : T)
+      # TODO: Should probably replace OverflowError with a custom error
+      raise OverflowError.new("Set overflow: the size of the set exceeds the capacity") if @hash.size == @capacity && @fixed
       @hash[element] = nil
       self
     end
@@ -112,5 +114,15 @@ module NewSet
     def <<(element : T)
       add element
     end
+
+    # Not sure if returning self is better than returning nil
+    def add?(element : T)
+      add element
+    rescue OverflowError
+      self
+    end
   end
 end
+
+ary = Array(Int32).new(1)
+ary.push 2, 3

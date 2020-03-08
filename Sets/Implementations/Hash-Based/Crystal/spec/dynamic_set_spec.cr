@@ -32,6 +32,39 @@ describe DynamicSet do
       new_set = set << 1
       new_set.should eq(DynamicSet.new([1]))
     end
+
+    it "can ignore the capacity if the capacity is not fixed" do
+      set = DynamicSet(Int32).new(1) # equivalent to DynamicSet(Int32).new(capacity: 1, fixed: false)
+      set.add(1)
+      set.add(2)
+      set.add(3).should eq(DynamicSet.new([1, 2, 3]))
+    end
+
+    it "raises OverflowError if the capacity is fixed" do
+      set = DynamicSet(Int32).new(0, fixed: true)
+      expect_raises(OverflowError, "Set overflow: the size of the set exceeds the capacity") do
+        set.add(1)
+      end
+    end
+  end
+
+  describe "#add?" do
+    it "can push a value of the same type" do
+      set = DynamicSet(Int32).new
+      set.add?(1).should eq(DynamicSet.new([1]))
+    end
+
+    it "can ignore the capacity if the capacity is not fixed" do
+      set = DynamicSet(Int32).new(1) # equivalent to DynamicSet(Int32).new(capacity: 1, fixed: false)
+      set.add?(1)
+      set.add?(2)
+      set.add?(3).should eq(DynamicSet.new([1, 2, 3]))
+    end
+
+    it "returns itself if the size of the length exceeds the fixed capacity" do
+      set = DynamicSet(Int32).new(0, fixed: true)
+      set.add?(3).should eq(DynamicSet(Int32).new)
+    end
   end
 
   describe "StaticSet methods" do
