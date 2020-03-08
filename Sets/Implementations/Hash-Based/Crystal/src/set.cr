@@ -67,27 +67,6 @@ module NewSet
       @hash.empty?
     end
 
-    # # Adds a value into a stack
-    # # NOTE: I just realized this operator is only part of dynamic sets, but this is the easiest way to implement `#union`
-    # # ```
-    # # StaticSet.new([1, 2]).add(2) # => {1,2,2}
-    # # ```
-    # private def add(element : T)
-    #   @hash[element] = nil
-    #   self
-    # end
-
-    # # Adds a value into a stack
-    # #
-    # # NOTE: I might add a #push method as well if needed...
-    # #
-    # # ```
-    # # StaticSet.new([1, 2]).add(2) # => {1,2,2}
-    # # ```
-    # private def <<(element : T)
-    #   add element
-    # end
-
     def <=>(other : StaticSet(U)) forall U
       to_a.sort <=> other.to_a.sort
     end
@@ -108,6 +87,30 @@ module NewSet
 
     def initialize(*elements : T)
       super
+    end
+
+    # Adds a value into the set
+    #
+    # NOTE: I just realized this operator is only part of dynamic sets, but this is the easiest way to implement `#union`
+    #
+    # Originally planned on adding #push as an alias method (alongside <<)
+    # Since I didn't know #add was the conventional method at that time
+    #
+    # ```
+    # StaticSet.new([1, 2]).add(2) # => {1,2,2}
+    # ```
+    def add(element : T)
+      @hash[element] = nil
+      self
+    end
+
+    # Adds a value into a set
+    #
+    # ```
+    # StaticSet.new([1, 2]).add(2) # => {1,2,2}
+    # ```
+    def <<(element : T)
+      add element
     end
   end
 end

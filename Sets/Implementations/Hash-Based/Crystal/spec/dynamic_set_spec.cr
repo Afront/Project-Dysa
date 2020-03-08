@@ -21,6 +21,19 @@ describe DynamicSet do
     end
   end
 
+  describe "#add" do
+    it "can push a value of the same type" do
+      set = DynamicSet(Int32).new
+      set.add(1).should eq(DynamicSet.new([1]))
+    end
+
+    it "can use << as an alias" do
+      set = DynamicSet(Int32).new
+      new_set = set << 1
+      new_set.should eq(DynamicSet.new([1]))
+    end
+  end
+
   describe "StaticSet methods" do
     describe "#to_a" do
       it "should turn a set into an array based on its values" do
@@ -39,19 +52,6 @@ describe DynamicSet do
         DynamicSet(Int32).new.inspect.should eq("{}")
       end
     end
-
-    # describe "#add" do
-    #   it "can push a value of the same type" do
-    #     set = DynamicSet(Int32).new
-    #     set.add(1).should eq(DynamicSet.new([1]))
-    #   end
-
-    #   it "can use << as an alias" do
-    #     set = DynamicSet(Int32).new
-    #     new_set = set << 1
-    #     new_set.should eq(DynamicSet.new([1]))
-    #   end
-    # end
 
     describe "#union" do
       it "should return a set that contains elements from both sets" do
