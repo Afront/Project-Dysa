@@ -22,7 +22,7 @@ describe DynamicSet do
   end
 
   describe "#add" do
-    it "can push a value of the same type" do
+    it "can add a value of the same type" do
       set = DynamicSet(Int32).new
       set.add(1).should eq(DynamicSet.new([1]))
     end
@@ -49,7 +49,7 @@ describe DynamicSet do
   end
 
   describe "#add?" do
-    it "can push a value of the same type" do
+    it "can add a value of the same type" do
       set = DynamicSet(Int32).new
       set.add?(1).should eq(DynamicSet.new([1]))
     end
@@ -64,6 +64,44 @@ describe DynamicSet do
     it "returns itself if the size of the length exceeds the fixed capacity" do
       set = DynamicSet(Int32).new(0, fixed: true)
       set.add?(3).should eq(DynamicSet(Int32).new)
+    end
+  end
+
+  describe "#delete" do
+    it "can delete an existing element in the set" do
+      set = DynamicSet.new(1, 2, 3)
+      set.delete(2).should eq(DynamicSet.new(1, 3))
+    end
+
+    it "can use #remove as an alias" do
+      set = DynamicSet.new(1, 2, 3)
+      set.remove(2).should eq(DynamicSet.new(1, 3))
+    end
+
+    # Will probably be ElementError in the future
+    it "raises IndexError if the capacity is fixed" do
+      set = DynamicSet.new(1, 2, 3)
+      expect_raises(IndexError, "The element 0 does not exist in the set #{set}") do
+        set.remove(0)
+      end
+    end
+  end
+
+  describe "#delete?" do
+    it "can delete an existing element in the set" do
+      set = DynamicSet.new(1, 2, 3)
+      set.delete?(2).should eq(DynamicSet.new(1, 3))
+    end
+
+    it "can use #remove as an alias" do
+      set = DynamicSet.new(1, 2, 3)
+      set.remove?(2).should eq(DynamicSet.new(1, 3))
+    end
+
+    # Will probably be ElementError in the future
+    it "returns nil if the element does not exist in the set" do
+      set = DynamicSet.new(1, 2, 3)
+      set.delete?(0).should be_nil
     end
   end
 

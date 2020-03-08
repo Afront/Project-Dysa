@@ -10,14 +10,14 @@ module NewSet
     include CoreSetMethods(T)
 
     def initialize
-      @hash = Hash(T, Nil).new
+      @hash = Hash(T, Bool).new
     end
 
     def initialize(enumerable : Enumerable(T))
-      @hash = Hash(T, Nil).new
+      @hash = Hash(T, Bool).new
 
       enumerable.each do |key|
-        @hash[key] = nil
+        @hash[key] = true
       end
     end
 
@@ -102,7 +102,7 @@ module NewSet
     def add(element : T)
       # TODO: Should probably replace OverflowError with a custom error
       raise OverflowError.new("Set overflow: the size of the set exceeds the capacity") if @hash.size == @capacity && @fixed
-      @hash[element] = nil
+      @hash[element] = true
       self
     end
 
@@ -120,6 +120,33 @@ module NewSet
       add element
     rescue OverflowError
       self
+    end
+
+    # Not sure if it's better to return the element or the set
+    def delete(element : T)
+      # Either IndexError or KeyError
+      # Or maybe...
+      # TODO: Create an ElementError later on
+      @hash.delete(element) || raise IndexError.new "The element #{element} does not exist in the set #{self}"
+      self
+    end
+
+    # Not sure if it's better to return the element or the set
+    def remove(element : T)
+      delete element
+      self
+    end
+
+    # Not sure if it's better to return the element or the set
+    def delete?(element : T)
+      delete element
+    rescue IndexError
+      nil
+    end
+
+    # Not sure if it's better to return the element or the set
+    def remove?(element : T)
+      delete? element
     end
   end
 end
