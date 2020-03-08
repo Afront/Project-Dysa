@@ -96,4 +96,18 @@ module NewSet
       size
     end
   end
+
+  class DynamicSet(T) < StaticSet(T)
+    def initialize(@capacity : Int32? = nil)
+      super()
+    end
+
+    def initialize(enumerable : Enumerable(T))
+      super
+    end
+
+    def initialize(*elements : T)
+      super
+    end
+  end
 end
