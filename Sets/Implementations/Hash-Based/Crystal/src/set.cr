@@ -91,5 +91,9 @@ module NewSet
     def <=>(other : StaticSet(U)) forall U
       to_a.sort <=> other.to_a.sort
     end
+
+    def cardinality
+      size
+    end
   end
 end
