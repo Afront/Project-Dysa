@@ -14,7 +14,11 @@ describe NewSet do
     end
 
     it "should only 'keep' one 'copy' of each element" do
-      StaticSet.new([1, 2, 2, 3]).should eq(StaticSet.new([1, 2, 2, 3]))
+      StaticSet.new([1, 2, 2, 3]).should eq(StaticSet.new([1, 2, 3]))
+    end
+
+    it "can create a new set based on the arguments" do
+      StaticSet.new 1, 2, 3
     end
   end
 

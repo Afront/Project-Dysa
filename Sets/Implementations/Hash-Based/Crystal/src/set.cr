@@ -21,6 +21,10 @@ module NewSet
       end
     end
 
+    def initialize(*elements : T)
+      initialize elements
+    end
+
     # Converts the base set into an array
     #
     # ```
