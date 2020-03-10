@@ -1,0 +1,13 @@
+name: Regular
+version: 0.1.0
+
+authors:
+  - Afront <3943720+Afront@users.noreply.github.com>
+
+targets:
+  Regular:
+    main: src/Regular.cr
+
+crystal: 0.32.1
+
+license: MIT
