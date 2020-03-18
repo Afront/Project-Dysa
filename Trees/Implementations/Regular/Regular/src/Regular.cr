@@ -2,5 +2,14 @@
 module Regular
   VERSION = "0.1.0"
 
-  # TODO: Put your code here
+  class Tree
+    def delete
+    end
+
+    def search
+    end
+
+    def prune
+    end
+  end
 end
