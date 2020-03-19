@@ -23,5 +23,18 @@ describe Binary do
       node = Node.new(1)
       node.left.should be_nil
     end
+
+    describe "#set" do
+      it "returns an exception if the node has already been set" do
+        expect_raises(Exception, "Already set") do
+          Node.new(1).set(2)
+        end
+      end
+
+      # Different type
+    end
+
+    describe "#update" do
+    end
   end
 end

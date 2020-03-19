@@ -10,5 +10,13 @@ module Binary
       left = nil
       right = nil
     end
+
+    def set(data : T)
+      raise "Already set" if data != nil
+      @data = data
+    end
+
+    def update(@data : T)
+    end
   end
 end
