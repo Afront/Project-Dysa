@@ -31,10 +31,17 @@ describe Binary do
         end
       end
 
+      it "sets a value" do
+        Node.new(1).left.set(2)
+      end
+
       # Different type
     end
 
     describe "#update" do
+      it "sets a value" do
+        Node.new(1).update(2)
+      end
     end
   end
 end
