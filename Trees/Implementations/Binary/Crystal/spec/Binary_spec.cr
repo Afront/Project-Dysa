@@ -32,7 +32,8 @@ describe Binary do
       end
 
       it "sets a value" do
-        Node.new(1).left.set(2)
+        Node.new(1).set_left(2)
+        Node.new(1).set_right(2)
       end
 
       # Different type
