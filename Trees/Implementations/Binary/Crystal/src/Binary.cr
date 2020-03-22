@@ -25,5 +25,23 @@ module Binary
 
     def update(@data : T)
     end
+
+    def number_of_children
+      [self.left, self.right].compact.size
+    end
+
+    def insert(data : T)
+      all_array = [self.left, self.right]
+
+      while !nil || all_array.flatten.first.number_of_children == 2
+        all_array.shift
+      end
+
+      if all_array.first.left.nil?
+        all_array.first.set_left(data)
+      elsif all_array.first.right.nil?
+        all_array.first.set_right.update(data)
+      end
+    end
   end
 end

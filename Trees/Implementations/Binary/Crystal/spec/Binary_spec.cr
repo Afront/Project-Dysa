@@ -44,5 +44,11 @@ describe Binary do
         Node.new(1).update(2)
       end
     end
+
+    describe "#insert" do
+      it "inserts a value to the node" do
+        Node.new(1).insert(2)
+      end
+    end
   end
 end
