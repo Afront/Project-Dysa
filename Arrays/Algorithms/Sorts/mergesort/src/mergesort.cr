@@ -22,25 +22,25 @@ module Mergesort(T)
     merge(left, right)
   end
 
-  def self.merge(left, right)
+  def self.merge(left : Array(T), right : Array(T))
     result = [] of T
 
     until left.empty? || right.empty?
       if left.first <= right.first
-        result << left.pop
+        result << left.shift
       else
-        result << right.pop
+        result << right.shift
       end
-
-      until left.empty?
-        result << left.pop
-      end
-
-      until right.empty?
-        result << right.pop
-      end
-
-      result
     end
+
+    until left.empty?
+      result << left.shift
+    end
+
+    until right.empty?
+      result << right.shift
+    end
+
+    result
   end
 end
