@@ -16,31 +16,16 @@ module Mergesort(T)
       end
     end
 
-    left = merge_sort(left)
-    right = merge_sort(right)
-
-    merge(left, right)
+    merge(merge_sort(left), merge_sort(right))
   end
 
   def self.merge(left : Array(T), right : Array(T))
     result = [] of T
 
     until left.empty? || right.empty?
-      if left.first <= right.first
-        result << left.shift
-      else
-        result << right.shift
-      end
+      result << (left.first <= right.first ? left.shift : right.shift)
     end
 
-    until left.empty?
-      result << left.shift
-    end
-
-    until right.empty?
-      result << right.shift
-    end
-
-    result
+    result + left + right
   end
 end
