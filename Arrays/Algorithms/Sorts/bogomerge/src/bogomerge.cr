@@ -10,7 +10,8 @@ module Bogomerge(T)
   end
 
   def self.sort(array : Array(T))
-    return Bogosort.sort(array) if array.size <= 3
+    # return Bogosort.sort(array) if array.size <= 3
+    return Bogosort.sort(array) if array.size <= Random.rand(3)
 
     left = [] of T
     right = [] of T
