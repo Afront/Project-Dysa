@@ -4,12 +4,13 @@ module InsertionSort(T)
 
   def self.sort(array : Array(T))
     # return Bogosort.sort(array) if array.size <= 3
-    (0..array.size.pred).each do |i|
-      j = i + 1
-      while j > 0 && array[j.pred] > array[j]
-        array[j], array[j - 1] = array[j - 1], array[j]
+    1.upto(array.size) do |i|
+      j = i.pred
+      while j >= 0 && array[j] > array[j.succ]
+        array[j.succ] = array[j]
+        j -= 1
       end
-      i += 1
+      array[j.succ] = array[j]
     end
   end
 end
