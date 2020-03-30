@@ -1,0 +1,13 @@
+name: insertion_sort
+version: 0.1.0
+
+authors:
+  - Afront <3943720+Afront@users.noreply.github.com>
+
+targets:
+  insertion_sort:
+    main: src/insertion_sort.cr
+
+crystal: 0.32.1
+
+license: MIT
