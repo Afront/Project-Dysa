@@ -4,10 +4,9 @@ module InsertionSort(T)
 
   def self.sort(array : Array(T))
     array.size.times do |i|
-      j = i
-      while j > 0 && array[j.pred] > array[j]
-        array[j], array[j.pred] = array[j.pred], array[j]
-        j -= 1
+      while i > 0 && array[i.pred] > array[i]
+        array[i], array[i.pred] = array[i.pred], array[i]
+        i -= 1
       end
     end
     array
