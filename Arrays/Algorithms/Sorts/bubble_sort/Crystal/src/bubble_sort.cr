@@ -2,20 +2,18 @@
 module BubbleSort
   VERSION = "0.1.0"
 
-  class Error < StandardError; end
-
-  def self.sorted(words)
-    words.each_cons(2).all? { |a, b| a <= b }
+  def self.sorted(array)
+    array.each_cons(2).all? { |i| i[0] <= i[1] }
   end
 
-  def self.sort(words)
-    until sorted words
-      words.length.pred.times do |i|
-        next unless words[i] > words[i + 1]
+  def self.sort(array)
+    until sorted array
+      array.size.pred.times do |i|
+        next unless array[i] > array[i.succ]
 
-        words[i], words[i + 1] = words[i + 1], words[i]
+        array[i], array[i.succ] = array[i.succ], array[i]
       end
     end
-    words
+    array
   end
 end
